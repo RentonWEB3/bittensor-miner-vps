@@ -48,6 +48,7 @@ def get_json(commit_sha: str, filename: str) -> Optional[Dict[str, Any]]:
             bt.logging.info(f"File '{file_path}' found. Reading contents...")
             with open(file_path, 'r') as file:
                 content = json.load(file)
+            bt.logging.info(f"File content: {content}")
             return content
         else:
             bt.logging.error(f"File '{file_path}' not found in this commit.")
@@ -142,8 +143,14 @@ def calculate_total_weights(validator_data: Dict[str, Dict[str, Any]], default_j
         stake_percentage = data.get('percent_stake', 1) / total_stake
         vali_weight = total_vali_weight * stake_percentage
         
+        # Debug: Check if JSON is None or empty
+        if not data.get('json'):
+            bt.logging.warning(f"Validator {hotkey} has empty JSON data")
+            continue
+        
         # Check if this validator's JSON is in old format or new format
         validator_json = data['json']
+        bt.logging.info(f"Processing validator JSON: {validator_json}")
         
         # Convert old format to new format if needed
         if validator_json and isinstance(validator_json, list):
