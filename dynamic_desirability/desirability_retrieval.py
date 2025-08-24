@@ -240,7 +240,7 @@ def to_lookup(json_path: str):
         job_matcher = JobMatcher(jobs=[
             Job(
                 id=job.get('id'),  # Preserve job ID
-                keyword=job['params'].get('keyword') or None,  # Use None if keyword is empty
+                keyword=job['params'].get('keyword') or "",  # Use empty string if keyword is None
                 label=job['params'].get('label') or "default",  # Use "default" if label is None
                 job_weight=job['weight'],
                 # Convert datetime strings to time bucket IDs during initial parsing
