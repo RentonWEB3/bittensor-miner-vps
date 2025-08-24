@@ -12,8 +12,8 @@ from dynamic_desirability.chain_utils import ChainPreferenceStore, add_args
 from common import constants
 from common.data import DataLabel, DataSource
 from common.utils import get_validator_data, is_validator, time_bucket_id_from_datetime
-from rewards.data import DataSourceDesirability, DataDesirabilityLookup, JobMatcher, Job as OldJob
-from dynamic_desirability.data import Job, JobParams
+from rewards.data import DataSourceDesirability, DataDesirabilityLookup, JobMatcher, Job
+from dynamic_desirability.data import JobParams
 from dynamic_desirability.constants import (REPO_URL,
                                             PREFERENCES_FOLDER,
                                             DEFAULT_JSON_PATH,
@@ -100,7 +100,7 @@ def calculate_total_weights(validator_data: Dict[str, Dict[str, Any]], default_j
                     platform = source["source_name"]
                     for label, weight in source["label_weights"].items():
                         converted_jobs.append({
-                            "id": f"default_{len(converted_jobs)}",  # Generate ID for converted jobs
+                            "id": f"default_{len(converted_jobs) if converted_jobs is not None else 0}",  # Generate ID for converted jobs
                             "params": {
                                 "keyword": None,
                                 "platform": platform,
@@ -120,7 +120,7 @@ def calculate_total_weights(validator_data: Dict[str, Dict[str, Any]], default_j
                 
             job_key = create_job_key(job["params"])
             # Store the ID from default jobs (or generate one if missing)
-            job_ids[job_key] = job.get("id", f"default_{len(job_ids)}")
+            job_ids[job_key] = job.get("id", f"default_{len(job_ids) if job_ids is not None else 0}")
             aggregated_jobs[job_key] = {
                 "weight": job.get("weight", 1.0),
                 "params": job["params"].copy()
@@ -151,7 +151,7 @@ def calculate_total_weights(validator_data: Dict[str, Dict[str, Any]], default_j
                     platform = source["source_name"]
                     for label, weight in source["label_weights"].items():
                         converted_jobs.append({
-                            "id": f"aggregate_{len(converted_jobs)}",  # Generate ID for converted jobs
+                            "id": f"aggregate_{len(converted_jobs) if converted_jobs is not None else 0}",  # Generate ID for converted jobs
                             "params": {
                                 "keyword": None,
                                 "platform": platform,
@@ -170,7 +170,7 @@ def calculate_total_weights(validator_data: Dict[str, Dict[str, Any]], default_j
                 continue
                 
             # Skip labels that are longer than MAX_LABEL_LENGTH
-            if len(job["params"]["label"]) > constants.MAX_LABEL_LENGTH:
+            if len(job["params"]["label"]) if job["params"]["label"] is not None else 0 > constants.MAX_LABEL_LENGTH:
                 continue
                 
             job_weight = job.get("weight", 1.0)
@@ -178,7 +178,7 @@ def calculate_total_weights(validator_data: Dict[str, Dict[str, Any]], default_j
             
             # Store the first ID we encounter for this job key (to preserve custom IDs)
             if job_key not in job_ids:
-                job_ids[job_key] = job.get("id", f"aggregate_{len(job_ids)}")
+                job_ids[job_key] = job.get("id", f"aggregate_{len(job_ids) if job_ids is not None else 0}")
             
             weighted_job_value = vali_weight * job_weight / normalizer
             
@@ -238,7 +238,7 @@ def to_lookup(json_path: str):
         
         # Create JobMatcher for this platform
         job_matcher = JobMatcher(jobs=[
-            OldJob(
+            Job(
                 id=job.get('id'),  # Preserve job ID
                 keyword=job['params'].get('keyword'),  # Use get() with default None to handle missing keys
                 label=job['params'].get('label'),      # Use label as label
