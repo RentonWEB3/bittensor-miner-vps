@@ -154,8 +154,9 @@ def calculate_total_weights(validator_data: Dict[str, Dict[str, Any]], default_j
         
         # Convert old format to new format if needed
         if validator_json and isinstance(validator_json, list):
-            if "source_name" in validator_json[0] and "label_weights" in validator_json[0]:
+            if len(validator_json) > 0 and "source_name" in validator_json[0] and "label_weights" in validator_json[0]:
                 # Old format detected, convert to new job-based format
+                bt.logging.info(f"Converting old format validator data for {hotkey}")
                 converted_jobs = []
                 for source in validator_json:
                     platform = source["source_name"]
@@ -178,6 +179,11 @@ def calculate_total_weights(validator_data: Dict[str, Dict[str, Any]], default_j
             if "params" not in job or not all(k in job["params"] for k in ["keyword", "platform", "label"]):
                 bt.logging.warning(f"Skipping malformed job from {hotkey}: {job}")
                 continue
+                
+            # Fix: If label is None but keyword exists, use keyword as label
+            if job["params"]["label"] is None and job["params"]["keyword"]:
+                bt.logging.info(f"Fixing validator job: using keyword '{job['params']['keyword']}' as label")
+                job["params"]["label"] = job["params"]["keyword"]
                 
             # Skip labels that are longer than MAX_LABEL_LENGTH
             if len(job["params"]["label"]) if job["params"]["label"] is not None else 0 > constants.MAX_LABEL_LENGTH:
