@@ -208,7 +208,21 @@ class RedditLiteScraper(Scraper):
         results: List[RedditContent] = []
         for data in dataset:
             try:
-                results.append(RedditContent(**data))
+                # Map Apify fields to RedditContent aliases
+                mapped_data = {}
+                for key, value in data.items():
+                    if key == 'community':
+                        mapped_data['communityName'] = value
+                    elif key == 'created_at':
+                        mapped_data['createdAt'] = value
+                    elif key == 'data_type':
+                        mapped_data['dataType'] = value
+                    elif key == 'parent_id':
+                        mapped_data['parentId'] = value
+                    else:
+                        mapped_data[key] = value
+                
+                results.append(RedditContent(**mapped_data))
             except Exception:
                 bt.logging.warning(
                     f"Failed to decode RedditContent from Apify response: {traceback.format_exc()}."
