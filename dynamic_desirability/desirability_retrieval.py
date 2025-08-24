@@ -187,10 +187,12 @@ def calculate_total_weights(validator_data: Dict[str, Dict[str, Any]], default_j
                 
             # Skip labels that are longer than MAX_LABEL_LENGTH
             if len(job["params"]["label"]) if job["params"]["label"] is not None else 0 > constants.MAX_LABEL_LENGTH:
+                bt.logging.warning(f"Skipping job with too long label: {job['params']['label']}")
                 continue
                 
             job_weight = job.get("weight", 1.0)
             job_key = create_job_key(job["params"])
+            bt.logging.info(f"Processing validator job: {job_key} with weight {job_weight}")
             
             # Store the first ID we encounter for this job key (to preserve custom IDs)
             if job_key not in job_ids:
@@ -209,6 +211,8 @@ def calculate_total_weights(validator_data: Dict[str, Dict[str, Any]], default_j
             # Cap job weight at 5.0
             if aggregated_jobs[job_key]["weight"] > 5.0:
                 aggregated_jobs[job_key]["weight"] = 5.0
+                
+    bt.logging.info(f"Finished processing validator {hotkey}. Total aggregated jobs so far: {len(aggregated_jobs)}")
 
     # Apply floor weight - ensure no job is below DEFAULT_SCALE_FACTOR
     for job_key, job_data in aggregated_jobs.items():
