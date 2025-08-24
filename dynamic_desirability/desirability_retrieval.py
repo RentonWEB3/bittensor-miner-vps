@@ -12,7 +12,8 @@ from dynamic_desirability.chain_utils import ChainPreferenceStore, add_args
 from common import constants
 from common.data import DataLabel, DataSource
 from common.utils import get_validator_data, is_validator, time_bucket_id_from_datetime
-from rewards.data import DataSourceDesirability, DataDesirabilityLookup, Job, JobMatcher
+from rewards.data import DataSourceDesirability, DataDesirabilityLookup, JobMatcher, Job as OldJob
+from dynamic_desirability.data import Job, JobParams
 from dynamic_desirability.constants import (REPO_URL,
                                             PREFERENCES_FOLDER,
                                             DEFAULT_JSON_PATH,
@@ -237,7 +238,7 @@ def to_lookup(json_path: str):
         
         # Create JobMatcher for this platform
         job_matcher = JobMatcher(jobs=[
-            Job(
+            OldJob(
                 id=job.get('id'),  # Preserve job ID
                 keyword=job['params'].get('keyword'),  # Use get() with default None to handle missing keys
                 label=job['params'].get('label'),      # Use label as label

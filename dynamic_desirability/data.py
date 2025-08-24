@@ -145,7 +145,7 @@ class Job(BaseModel):
 
 class PreferencesData(BaseModel):
     """Model for handling either format of preferences data"""
-    data: List[Job | OldFormatPreference]
+    data: List[Union[Job, OldFormatPreference]]
     
     @classmethod
     def parse_and_normalize(cls, data: List[dict], hotkey: Optional[str] = None) -> List[Job]:
