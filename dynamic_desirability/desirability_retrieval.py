@@ -240,8 +240,8 @@ def to_lookup(json_path: str):
         job_matcher = JobMatcher(jobs=[
             Job(
                 id=job.get('id'),  # Preserve job ID
-                keyword=job['params'].get('keyword'),  # Use get() with default None to handle missing keys
-                label=job['params'].get('label'),      # Use label as label
+                keyword=job['params'].get('keyword') or None,  # Use None if keyword is empty
+                label=job['params'].get('label') or "default",  # Use "default" if label is None
                 job_weight=job['weight'],
                 # Convert datetime strings to time bucket IDs during initial parsing
                 start_timebucket=datetime_to_timebucket(job['params'].get('post_start_datetime')),
