@@ -1,0 +1,20 @@
+{
+  "timestamp": "2025-08-23T16:44:05.398893",
+  "uptime_seconds": 1205.862087,
+  "issues": [
+    "❌ Нет данных в хранилище",
+    "❌ Нулевые стимулы"
+  ],
+  "warnings": [],
+  "metrics": {
+    "registration": {
+      "registered": true,
+      "uid": 41,
+      "hotkey": "5DnyaCt5eFAwKyR6af9R2bkCUo1MG1d8WqFAjKT37JwwJyZo"
+    },
+    "data": {
+      "total_entities": 0,
+      "error": "'SqliteMinerStorage' object has no attribute 'get_total_entities'"
+    },
+    "incentives": {
+      "relative_incentive": 

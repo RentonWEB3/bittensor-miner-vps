@@ -1,0 +1,33 @@
+{
+  "scraper_configs": [
+    {
+      "scraper_id": "X.microworlds",
+      "cadence_seconds": 300,
+      "labels_to_scrape": [
+        {
+          "label_choices": ["ev", "greenenergy", "tesla", "electricvehicles", "sustainabletransport", "electriccar", "evcharging", "renewableenergy", "solar", "windenergy", "climatechange", "carbonneutral", "battery", "charging", "sustainability"],
+          "max_age_hint_minutes": 1440,
+          "max_data_entities": 10
+        }
+      ],
+      "config": {
+        "cookies_path": "twitter_cookies.json"
+      }
+    },
+    {
+      "scraper_id": "Reddit.custom",
+      "cadence_seconds": 10,
+      "labels_to_scrape": [
+        {
+          "label_choices": ["technology", "electricvehicles", "evcharging", "teslamotors", "teslainvestorsclub", "teslamodel3", "teslamodelY", "renewableenergy", "solar", "windenergy", "climatechange", "environment", "sustainability", "greenenergy", "cleantech"],
+          "max_age_hint_minutes": 1440,
+          "max_data_entities": 200
+        }
+      ],
+      "config": {
+        "subreddit": "all",
+        "limit_per_label": 100
+      }
+    }
+  ]
+}

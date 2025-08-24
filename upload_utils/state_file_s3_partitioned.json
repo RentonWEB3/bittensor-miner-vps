@@ -1,0 +1,200 @@
+{
+  "default_0": {
+    "last_offset": 1211,
+    "total_records_processed": 1211,
+    "last_processed_time": "2025-08-23T23:55:51.985892",
+    "processing_completed": false
+  },
+  "default_4": {
+    "last_offset": 917,
+    "total_records_processed": 917,
+    "last_processed_time": "2025-08-23T23:55:53.688980",
+    "processing_completed": false
+  },
+  "default_5": {
+    "last_offset": 1,
+    "total_records_processed": 1,
+    "last_processed_time": "2025-07-22T11:36:51.996618",
+    "processing_completed": false
+  },
+  "default_6": {
+    "last_offset": 1,
+    "total_records_processed": 1,
+    "last_processed_time": "2025-07-22T11:36:52.397223",
+    "processing_completed": false
+  },
+  "default_7": {
+    "last_offset": 5,
+    "total_records_processed": 5,
+    "last_processed_time": "2025-07-22T11:36:52.908358",
+    "processing_completed": false
+  },
+  "default_8": {
+    "last_offset": 35,
+    "total_records_processed": 35,
+    "last_processed_time": "2025-07-22T11:36:53.427866",
+    "processing_completed": false
+  },
+  "default_9": {
+    "last_offset": 30,
+    "total_records_processed": 30,
+    "last_processed_time": "2025-07-22T11:36:53.952673",
+    "processing_completed": false
+  },
+  "crawler-1-pbtzpqm-cqxjyyyuts7ek": {
+    "last_offset": 1,
+    "total_records_processed": 1,
+    "last_processed_time": "2025-07-22T11:36:54.475517",
+    "processing_completed": false
+  },
+  "crawler-1-h1ajfrefkc8v-rka9muqg": {
+    "last_offset": 858,
+    "total_records_processed": 858,
+    "last_processed_time": "2025-08-23T20:12:28.383903",
+    "processing_completed": false
+  },
+  "crawler-0-h1ajfrefkc8v-rka9muqg": {
+    "last_offset": 679,
+    "total_records_processed": 679,
+    "last_processed_time": "2025-08-23T20:12:29.239277",
+    "processing_completed": false
+  },
+  "crawler-2-h1ajfrefkc8v-rka9muqg": {
+    "last_offset": 413,
+    "total_records_processed": 413,
+    "last_processed_time": "2025-08-23T20:12:29.840927",
+    "processing_completed": false
+  },
+  "crawler-3-h1ajfrefkc8v-rka9muqg": {
+    "last_offset": 4,
+    "total_records_processed": 4,
+    "last_processed_time": "2025-07-22T11:36:57.780826",
+    "processing_completed": false
+  },
+  "crawler-0-v5gm7hglbkoe7v3visaae": {
+    "last_offset": 1,
+    "total_records_processed": 1,
+    "last_processed_time": "2025-07-22T11:36:58.518892",
+    "processing_completed": false
+  },
+  "crawler-0-0dehet6gopxi7lzsbmvp-": {
+    "last_offset": 3,
+    "total_records_processed": 3,
+    "last_processed_time": "2025-07-22T11:36:59.121398",
+    "processing_completed": false
+  },
+  "crawler-1-egqkgxqazfont5be9uaov": {
+    "last_offset": 1,
+    "total_records_processed": 1,
+    "last_processed_time": "2025-07-22T11:36:59.783373",
+    "processing_completed": false
+  },
+  "crawler-3-egqkgxqazfont5be9uaov": {
+    "last_offset": 1,
+    "total_records_processed": 1,
+    "last_processed_time": "2025-07-22T11:37:00.193089",
+    "processing_completed": false
+  },
+  "crawler-1-e7qeea7ez102mnx8ksr86": {
+    "last_offset": 5,
+    "total_records_processed": 5,
+    "last_processed_time": "2025-07-22T11:37:00.811410",
+    "processing_completed": false
+  },
+  "crawler-3-e7qeea7ez102mnx8ksr86": {
+    "last_offset": 4,
+    "total_records_processed": 4,
+    "last_processed_time": "2025-07-22T11:37:01.300061",
+    "processing_completed": false
+  },
+  "crawler-2-e7qeea7ez102mnx8ksr86": {
+    "last_offset": 3,
+    "total_records_processed": 3,
+    "last_processed_time": "2025-07-22T11:37:01.819798",
+    "processing_completed": false
+  },
+  "crawler-8-e7qeea7ez102mnx8ksr86": {
+    "last_offset": 1,
+    "total_records_processed": 1,
+    "last_processed_time": "2025-07-22T11:37:02.412714",
+    "processing_completed": false
+  },
+  "crawler-2-rw5tl-ullr5jftn7sc9sa": {
+    "last_offset": 1,
+    "total_records_processed": 1,
+    "last_processed_time": "2025-07-22T11:37:02.902656",
+    "processing_completed": false
+  },
+  "crawler-0-kpyodoh0ehsyra-0hpo4t": {
+    "last_offset": 3,
+    "total_records_processed": 3,
+    "last_processed_time": "2025-07-22T11:37:03.519343",
+    "processing_completed": false
+  },
+  "crawler-1-kpyodoh0ehsyra-0hpo4t": {
+    "last_offset": 1,
+    "total_records_processed": 1,
+    "last_processed_time": "2025-07-22T11:37:04.036449",
+    "processing_completed": false
+  },
+  "crawler-2-mxygtykays-j0qdfvzvoe": {
+    "last_offset": 4,
+    "total_records_processed": 4,
+    "last_processed_time": "2025-07-22T11:37:04.725630",
+    "processing_completed": false
+  },
+  "crawler-1-kmfxca0w7mytlkj-vi8eh": {
+    "last_offset": 2,
+    "total_records_processed": 2,
+    "last_processed_time": "2025-07-22T11:37:05.863840",
+    "processing_completed": false
+  },
+  "crawler-0-kmfxca0w7mytlkj-vi8eh": {
+    "last_offset": 2,
+    "total_records_processed": 2,
+    "last_processed_time": "2025-07-22T11:37:06.361992",
+    "processing_completed": false
+  },
+  "crawler-2-kmfxca0w7mytlkj-vi8eh": {
+    "last_offset": 12,
+    "total_records_processed": 12,
+    "last_processed_time": "2025-07-22T11:37:06.871543",
+    "processing_completed": false
+  },
+  "crawler-1-3do2ocgrnx8zfhjiohp8f": {
+    "last_offset": 35,
+    "total_records_processed": 35,
+    "last_processed_time": "2025-07-22T11:37:07.636801",
+    "processing_completed": false
+  },
+  "crawler-3-3do2ocgrnx8zfhjiohp8f": {
+    "last_offset": 1,
+    "total_records_processed": 1,
+    "last_processed_time": "2025-07-22T11:37:08.152369",
+    "processing_completed": false
+  },
+  "crawler-5-3do2ocgrnx8zfhjiohp8f": {
+    "last_offset": 481,
+    "total_records_processed": 481,
+    "last_processed_time": "2025-08-23T20:12:31.292362",
+    "processing_completed": false
+  },
+  "crawler-0-cqb7mvw-5ihlunbqfe-zi": {
+    "last_offset": 85,
+    "total_records_processed": 85,
+    "last_processed_time": "2025-07-22T11:37:09.820507",
+    "processing_completed": false
+  },
+  "crawler-1-cqb7mvw-5ihlunbqfe-zi": {
+    "last_offset": 9,
+    "total_records_processed": 9,
+    "last_processed_time": "2025-07-22T11:37:10.328720",
+    "processing_completed": false
+  },
+  "default_2": {
+    "last_offset": 407,
+    "total_records_processed": 407,
+    "last_processed_time": "2025-08-23T23:55:52.458710",
+    "processing_completed": false
+  }
+}
