@@ -262,5 +262,27 @@
             "post_start_datetime": null,
             "post_end_datetime": null
         }
+    },
+    {
+        "id": "test_1",
+        "weight": 5.0,
+        "params": {
+            "keyword": "cognitive longevity",
+            "platform": "x",
+            "label": "cognitive longevity",
+            "post_start_datetime": null,
+            "post_end_datetime": null
+        }
+    },
+    {
+        "id": "test_2",
+        "weight": 5.0,
+        "params": {
+            "keyword": "bitcoin",
+            "platform": "reddit",
+            "label": "bitcoin",
+            "post_start_datetime": null,
+            "post_end_datetime": null
+        }
     }
 ]
