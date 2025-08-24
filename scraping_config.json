@@ -5,11 +5,9 @@
       "cadence_seconds": 300,
       "labels_to_scrape": [
         {
-          "label_choices": ["bitcoin", "ethereum", "cryptonews", "solana", "cardano",
-           "polkadot", "defi", "uniswap", "trading", "stocks",
-           "zksync", "nft", "web3", "ai", "memecoin", "bittensor"],
+          "label_choices": [],
           "max_age_hint_minutes": 1440,
-          "max_data_entities": 10
+          "max_data_entities": 100
         }
       ],
       "config": {
@@ -18,14 +16,12 @@
     },
     {
       "scraper_id": "Reddit.custom",
-      "cadence_seconds": 10,
+      "cadence_seconds": 300,
       "labels_to_scrape": [
         {
-          "label_choices": ["Bitcoin","ethereum","CryptoCurrency","solana","cardano",
-           "polkadot","defi","uniswap","trading","Optimism",
-            "zksync","NFT","web3","Bittensor_","CryptoTechnology"],
+          "label_choices": [],
           "max_age_hint_minutes": 1440,
-          "max_data_entities": 200
+          "max_data_entities": 100
         }
       ],
       "config": {

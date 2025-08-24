@@ -249,6 +249,13 @@ class RedditCustomScraper(Scraper):
         search_limit = scrape_config.entity_limit
         search_sort = get_custom_sort_input(scrape_config.date_range.end)
         search_time = get_time_input(scrape_config.date_range.end)
+        
+        # Добавляем логи начала скрапинга
+        bt.logging.info(f"Starting Reddit scrape for subreddit: {subreddit_name}")
+        bt.logging.info(f"  - Search limit: {search_limit}")
+        bt.logging.info(f"  - Search time: {search_time}")
+        bt.logging.info(f"  - Search sort: {search_sort}")
+        bt.logging.info(f"  - Fetch submissions: {fetch_submissions}")
 
         # In either case we parse the response into a list of RedditContents.
         contents = None
@@ -295,6 +302,22 @@ class RedditCustomScraper(Scraper):
         bt.logging.success(
             f"Completed scrape for subreddit {subreddit_name}. Scraped {len(parsed_contents)} items."
         )
+        
+        # Добавляем подробные логи для Reddit
+        if len(parsed_contents) > 0:
+            bt.logging.info(f"Reddit scrape details for {subreddit_name}:")
+            bt.logging.info(f"  - Total items scraped: {len(parsed_contents)}")
+            bt.logging.info(f"  - Search limit: {search_limit}")
+            bt.logging.info(f"  - Search time: {search_time}")
+            bt.logging.info(f"  - Search sort: {search_sort}")
+            
+            # Показываем первые несколько элементов
+            for i, content in enumerate(parsed_contents[:3]):
+                if content and hasattr(content, 'body') and content.body:
+                    preview = content.body[:100] + "..." if len(content.body) > 100 else content.body
+                    bt.logging.info(f"  - Item {i+1}: {preview}")
+        else:
+            bt.logging.warning(f"No items scraped from subreddit {subreddit_name}")
 
         data_entities = []
         for content in parsed_contents:
