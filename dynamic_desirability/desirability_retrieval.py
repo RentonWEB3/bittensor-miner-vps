@@ -132,10 +132,13 @@ def calculate_total_weights(validator_data: Dict[str, Dict[str, Any]], default_j
     total_stake = sum(v.get('percent_stake', 1) for v in validator_data.values() if v.get('json'))
     
     # Process each validator's job submissions
+    bt.logging.info(f"Processing {len(validator_data)} validators...")
     for hotkey, data in validator_data.items():
         if not data.get('json'):
+            bt.logging.info(f"Skipping validator {hotkey}: no JSON data")
             continue
             
+        bt.logging.info(f"Processing validator {hotkey} with JSON: {data.get('json')}")
         stake_percentage = data.get('percent_stake', 1) / total_stake
         vali_weight = total_vali_weight * stake_percentage
         
@@ -216,6 +219,9 @@ def calculate_total_weights(validator_data: Dict[str, Dict[str, Any]], default_j
         json.dump(final_jobs, f, indent=4)
 
     bt.logging.info(f"\nTotal weights have been calculated and written to {AGGREGATE_JSON_PATH}")
+    bt.logging.info(f"Total jobs in final output: {len(final_jobs)}")
+    bt.logging.info(f"Default jobs added: {len([j for j in final_jobs if j['id'].startswith('default_')])}")
+    bt.logging.info(f"Validator jobs added: {len([j for j in final_jobs if not j['id'].startswith('default_')])}")
 
 
 def to_lookup(json_path: str):
