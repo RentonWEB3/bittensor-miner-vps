@@ -71,6 +71,8 @@ def _choose_scrape_configs(
         scraper_id: ScraperId, config: CoordinatorConfig, now: dt.datetime
 ) -> List[ScraperConfig]:
     """For the given scraper, returns a list of scrapes (defined by ScrapeConfig) to be run."""
+    import bittensor as bt
+    bt.logging.debug(f"DEBUG: _choose_scrape_configs called for {scraper_id}")
     assert (
             scraper_id in config.scraper_configs
     ), f"Scraper Id {scraper_id} not in config"
@@ -146,6 +148,10 @@ def _choose_scrape_configs(
                 )
             )
 
+    import bittensor as bt
+    bt.logging.debug(f"DEBUG: _choose_scrape_configs returning {len(results)} configs for {scraper_id}")
+    for i, result in enumerate(results):
+        bt.logging.debug(f"DEBUG: Config {i}: labels={result.labels}, entity_limit={result.entity_limit}")
     return results
 
 class ScraperCoordinator:
@@ -162,9 +168,10 @@ class ScraperCoordinator:
                 for scraper_id, cfg in config.scraper_configs.items()
             }
 
-            # Initialize the last scrape time as now, to protect against frequent scraping during Miner crash loops.
+            # Initialize the last scrape time as past time, so scrapers can start immediately
+            past_time = now - dt.timedelta(hours=1)  # 1 час назад
             self.last_scrape_time_per_scraper_id: Dict[ScraperId, dt.datetime] = {
-                scraper_id: now for scraper_id in config.scraper_configs.keys()
+                scraper_id: past_time for scraper_id in config.scraper_configs.keys()
             }
 
         def get_scraper_ids_ready_to_scrape(self, now: dt.datetime) -> List[ScraperId]:
@@ -245,11 +252,15 @@ class ScraperCoordinator:
             workers.append(worker)
 
         while self.is_running:
+            bt.logging.debug("DEBUG: Coordinator main loop iteration starting")
             now = dt.datetime.utcnow()
+            bt.logging.debug(f"DEBUG: Current time: {now}")
             scraper_ids_to_scrape_now = self.tracker.get_scraper_ids_ready_to_scrape(
                 now
             )
+            bt.logging.debug(f"DEBUG: Scrapers ready to scrape: {scraper_ids_to_scrape_now}")
             if not scraper_ids_to_scrape_now:
+                bt.logging.debug("DEBUG: Nothing ready to scrape yet. Trying again in 15s.")
                 bt.logging.trace("Nothing ready to scrape yet. Trying again in 15s.")
                 # Nothing is due a scrape. Wait a few seconds and try again
                 await asyncio.sleep(15)

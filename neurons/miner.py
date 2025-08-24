@@ -590,8 +590,11 @@ class Miner:
 
             self.last_sync_timestamp = dt.datetime.now()
             bt.logging.success(f"Miner starting at {self.last_sync_timestamp}.")
+        bt.logging.debug("DEBUG: About to start scraping coordinator...")
 
+        bt.logging.debug("DEBUG: Starting scraping coordinator now...")
         self.scraping_coordinator.run_in_background_thread()
+        bt.logging.debug("DEBUG: Scraping coordinator started successfully")
 
         while not self.should_exit:
             # This loop maintains the miner's operations until intentionally stopped.

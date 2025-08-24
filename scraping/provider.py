@@ -18,7 +18,7 @@ DEFAULT_FACTORIES = {
     ScraperId.X_FLASH: MicroworldsTwitterScraper,
     ScraperId.REDDIT_CUSTOM: RedditCustomScraper,
     ScraperId.X_MICROWORLDS: lambda cfg, session: TwikitProvider(cfg, session),
-    ScraperId.X_APIDOJO: ApiDojoTwitterScraper,
+    ScraperId.X_APIDOJO: lambda cfg, session: TwikitProvider(cfg, session),
     ScraperId.X_QUACKER: QuackerUrlScraper,
     ScraperId.YOUTUBE_CUSTOM_TRANSCRIPT: YouTubeTranscriptScraper,
     ScraperId.YOUTUBE_APIFY_TRANSCRIPT : YouTubeApifyTranscriptScraper

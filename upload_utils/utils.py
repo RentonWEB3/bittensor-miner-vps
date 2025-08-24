@@ -192,21 +192,19 @@ def parallel_encode_batch(items: pd.Series, fernet) -> pd.Series:
 
 def preprocess_twitter_df(df: pd.DataFrame, encoding_key_manager: EncodingKeyManager,
                           private_encoding_key_manager: EncodingKeyManager) -> pd.DataFrame:
-    """Preprocess Twitter DataFrame with empty text filtering and dual-key encoding."""
+    """Preprocess Twitter DataFrame for HF-валидации."""
     try:
         # Log initial count
         initial_count = len(df)
         bt.logging.info(f"Starting Twitter preprocessing with {initial_count} rows")
         
-        # Vectorized content decoding
-        df['content'] = df['content'].apply(decode_content)
-        
-        # Extract fields using vectorized operations
+        # Создаем правильную структуру для HF-валидации
         result_df = pd.DataFrame({
-            'text': df['content'].apply(lambda x: x.get('text')),
-            'tweet_hashtags': df['content'].apply(lambda x: x.get('tweet_hashtags')),
-            'label': df['label'],
-            'datetime': pd.to_datetime(df['datetime']).dt.strftime('%Y-%m-%d')
+            'text': df['content'].apply(lambda x: x.decode('utf-8') if isinstance(x, bytes) else x),
+            'label': df['label'].apply(lambda x: x.value if hasattr(x, 'value') else x),
+            'datetime': pd.to_datetime(df['datetime']).dt.strftime('%Y-%m-%d'),
+            'uri': df['uri'],  # Прозрачный URI для валидаторов
+            'source': 'x'
         })
         
         # Filter out rows with empty text
@@ -215,53 +213,33 @@ def preprocess_twitter_df(df: pd.DataFrame, encoding_key_manager: EncodingKeyMan
         
         if len(result_df) == 0:
             bt.logging.warning("All Twitter rows filtered out due to empty text fields")
-            return pd.DataFrame(columns=TWEET_DATASET_COLUMNS)
+            return pd.DataFrame(columns=['text', 'label', 'datetime', 'uri', 'source'])
             
         # Log filtered count
         filtered_count = len(result_df)
         removed_count = initial_count - filtered_count
         bt.logging.info(f"Removed {removed_count} Twitter rows with empty text. Remaining rows: {filtered_count}")
         
-        # Extract username and URL series from original data
-        filtered_content = df.loc[valid_text_mask, 'content']
-        usernames = filtered_content.apply(lambda x: x.get('username', ''))
-        urls = filtered_content.apply(lambda x: x.get('url', ''))
-        
-        # Get Fernet instances
-        public_fernet = encoding_key_manager.get_fernet()
-        private_fernet = private_encoding_key_manager.get_fernet()
-        
-        # Parallel encoding with respective keys (username with public key, URL with private key)
-        result_df['username_encoded'] = parallel_encode_batch(usernames, public_fernet)
-        result_df['url_encoded'] = parallel_encode_batch(urls, private_fernet)
-        
-        # Memory cleanup
-        df = None
-        filtered_content = None
-        
-        return result_df[TWEET_DATASET_COLUMNS]
+        return result_df[['text', 'label', 'datetime', 'uri', 'source']]
         
     except Exception as e:
         bt.logging.error(f"Error in Twitter preprocessing: {e}")
         raise
 
 def preprocess_reddit_df(df: pd.DataFrame, encoding_key_manager: EncodingKeyManager, private_encoding_key_manager: EncodingKeyManager) -> pd.DataFrame:
-    """Preprocess Reddit DataFrame with empty text filtering and dual-key encoding."""
+    """Preprocess Reddit DataFrame for HF-валидации."""
     try:
         # Log initial count
         initial_count = len(df)
         bt.logging.info(f"Starting Reddit preprocessing with {initial_count} rows")
         
-        # Vectorized content decoding
-        df['content'] = df['content'].apply(decode_content)
-        
-        # Extract fields using vectorized operations
+        # Создаем правильную структуру для HF-валидации
         result_df = pd.DataFrame({
-            'text': df['content'].apply(lambda x: x.get('body')),
-            'dataType': df['content'].apply(lambda x: x.get('dataType')),
-            'communityName': df['content'].apply(lambda x: x.get('communityName')),
-            'label': df['label'],
-            'datetime': pd.to_datetime(df['datetime']).dt.strftime('%Y-%m-%d')
+            'text': df['content'].apply(lambda x: x.decode('utf-8') if isinstance(x, bytes) else x),
+            'label': df['label'].apply(lambda x: x.value if hasattr(x, 'value') else x),
+            'datetime': pd.to_datetime(df['datetime']).dt.strftime('%Y-%m-%d'),
+            'uri': df['uri'],  # Прозрачный URI для валидаторов
+            'source': 'reddit'
         })
         
         # Filter out rows with empty text
@@ -270,25 +248,14 @@ def preprocess_reddit_df(df: pd.DataFrame, encoding_key_manager: EncodingKeyMana
         
         if len(result_df) == 0:
             bt.logging.warning("All Reddit rows filtered out due to empty text fields")
-            return pd.DataFrame(columns=REDDIT_DATASET_COLUMNS)
+            return pd.DataFrame(columns=['text', 'label', 'datetime', 'uri', 'source'])
             
         # Log filtered count
         filtered_count = len(result_df)
         removed_count = initial_count - filtered_count
         bt.logging.info(f"Removed {removed_count} Reddit rows with empty text. Remaining rows: {filtered_count}")
         
-        # Extract username and URL series from original data
-        filtered_content = df.loc[valid_text_mask, 'content']
-        usernames = filtered_content.apply(lambda x: x.get('username', ''))
-        urls = filtered_content.apply(lambda x: x.get('url', ''))
-        
-        # Get Fernet instances
-        public_fernet = encoding_key_manager.get_fernet()
-        private_fernet = private_encoding_key_manager.get_fernet()
-        
-        # Parallel encoding with respective keys (username with public key, URL with private key)
-        result_df['username_encoded'] = parallel_encode_batch(usernames, public_fernet)
-        result_df['url_encoded'] = parallel_encode_batch(urls, private_fernet)
+        return result_df[['text', 'label', 'datetime', 'uri', 'source']]
         
         # Memory cleanup
         df = None

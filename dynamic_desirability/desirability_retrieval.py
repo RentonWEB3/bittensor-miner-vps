@@ -186,8 +186,14 @@ def calculate_total_weights(validator_data: Dict[str, Dict[str, Any]], default_j
                 job["params"]["label"] = job["params"]["keyword"]
                 
             # Skip labels that are longer than MAX_LABEL_LENGTH
-            if len(job["params"]["label"]) if job["params"]["label"] is not None else 0 > constants.MAX_LABEL_LENGTH:
-                bt.logging.warning(f"Skipping job with too long label: {job['params']['label']}")
+            label_length = len(job["params"]["label"]) if job["params"]["label"] is not None else 0
+            if label_length > constants.MAX_LABEL_LENGTH:
+                bt.logging.warning(f"Skipping job with too long label: '{job['params']['label']}' (length: {label_length}, max: {constants.MAX_LABEL_LENGTH})")
+                continue
+                
+            # Skip empty labels
+            if not job["params"]["label"]:
+                bt.logging.warning(f"Skipping job with empty label: {job}")
                 continue
                 
             job_weight = job.get("weight", 1.0)
